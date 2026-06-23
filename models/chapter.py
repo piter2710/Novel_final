@@ -1,9 +1,11 @@
+from typing import TYPE_CHECKING
 from sqlalchemy import DateTime, Integer, String, ForeignKey, func
 from database import Base
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from datetime import datetime
-
-from models.novel import Novel
+if TYPE_CHECKING:
+    from models.comment import Comment
+    from models.novel import Novel
 
 class Chapter(Base):
     __tablename__ = "chapters"
@@ -17,3 +19,4 @@ class Chapter(Base):
     
     novel_id: Mapped[int] = mapped_column(Integer, ForeignKey("novels.novel_id", ondelete="CASCADE"), nullable=False)
     novel: Mapped["Novel"] = relationship("Novel", back_populates="chapters")
+    comments: Mapped[list["Comment"]] = relationship("Comment", back_populates="commented_chapter", cascade="all, delete-orphan")

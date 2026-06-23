@@ -2,6 +2,10 @@ from sqlalchemy import CheckConstraint, Integer, String, ForeignKey, func, DateT
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from database import Base
 from datetime import datetime
+from typing import TYPE_CHECKING
+if TYPE_CHECKING:
+    from models.novel import Novel
+    from models.user import User
 class Review(Base):
     __tablename__ = "reviews"
     review_id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
@@ -13,7 +17,8 @@ class Review(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
     updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), onupdate=func.now(), server_default=func.now())
     
-    
+    reviewed_novel: Mapped["Novel"] = relationship("Novel", back_populates="reviews")
+    reviewer: Mapped["User"] = relationship("User", back_populates="reviews")
     
     __table_args__ = (
         CheckConstraint(

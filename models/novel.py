@@ -20,5 +20,5 @@ class Novel(Base):
     updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), onupdate=func.now(), server_default=func.now())
     
     chapters: Mapped[list["Chapter"]] = relationship("Chapter", back_populates="novel", cascade="all, delete-orphan")
-    comments: Mapped[list["Comment"]] = relationship("Comment", backref="novel", cascade="all, delete-orphan")
-    reviews: Mapped[list["Review"]] = relationship("Review", backref="novel", cascade="all, delete-orphan")
+    comments: Mapped[list["Comment"]] = relationship("Comment", back_populates="commented_novel", cascade="all, delete-orphan")
+    reviews: Mapped[list["Review"]] = relationship("Review", back_populates="novel", cascade="all, delete-orphan")
