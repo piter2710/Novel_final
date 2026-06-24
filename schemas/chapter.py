@@ -19,3 +19,4 @@ class ChapterOut(ChapterBase):
 class ChapterUpdate(BaseModel):
     title: str | None = None
     content: str | None = None
+    chapter_number: int | None = None

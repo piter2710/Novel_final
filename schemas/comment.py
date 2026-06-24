@@ -16,6 +16,10 @@ class CommentOut(CommentBase):
     
     model_config = ConfigDict(
         from_attributes=True, extra="ignore")
+class CommentDetail(CommentOut):
+    likes_count: int
+    reply_count: int
+    is_liked_by_user: bool = False
 class CommentUpdate(BaseModel):
     content: str | None = None
     

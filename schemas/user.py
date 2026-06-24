@@ -10,6 +10,7 @@ class UserCreate(UserBase):
 class UserPublic(BaseModel):
     user_id: int
     username: str
+    
     model_config = ConfigDict(
         from_attributes=True, extra="ignore")
 class UserOut(UserBase):
@@ -25,3 +26,11 @@ class UserUpdate(BaseModel):
 class UserPasswordUpdate(BaseModel):
     password: str
     new_password: str
+
+class UserProfile(BaseModel):
+    username: str
+    
+    created_at: datetime
+    updated_at: datetime
+    mdoel_config = ConfigDict(
+        from_attributes=True, extra="ignore")
