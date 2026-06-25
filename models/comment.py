@@ -30,5 +30,5 @@ class Comment(Base):
     CheckConstraint(
     "(novel_id IS NOT NULL AND chapter_id IS NULL) OR "
     "(novel_id IS NULL AND chapter_id IS NOT NULL)",
-    name="exactly_one_target")
+    name="exactly_one_target"),
         )

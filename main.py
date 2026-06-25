@@ -3,13 +3,18 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from settings import settings
 import logging
-
+import models
+from routes.novel import router as novel_router
+from database import Base, engine as async_engine
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 logger = logging.getLogger(__name__)
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     logger.info("Starting up FastAPI application...")
+    async with async_engine.begin() as db:
+        await db.run_sync(Base.metadata.create_all)
+        
     yield
     logger.info("Shutting down FastAPI application...")
 
@@ -37,3 +42,4 @@ async def health_check():
 # Include routing
 # from routes.my_router import router 
 # app.include_router(router, prefix=settings.API_V1_PREFIX)
+app.include_router(novel_router)

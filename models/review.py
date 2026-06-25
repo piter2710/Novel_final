@@ -17,7 +17,8 @@ class Review(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
     updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), onupdate=func.now(), server_default=func.now())
     
-    reviewed_novel: Mapped["Novel"] = relationship("Novel", back_populates="reviews")
+    
+    novel: Mapped["Novel"] = relationship("Novel", back_populates="reviews")
     reviewer: Mapped["User"] = relationship("User", back_populates="reviews")
     
     __table_args__ = (
